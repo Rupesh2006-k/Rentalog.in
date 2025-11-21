@@ -12,11 +12,27 @@
   user-select: none;
 }
 #showCity::-webkit-scrollbar {
-  display: none; /* hides scrollbar in Chrome, Edge, Safari */
+  display: none; 
 }
 
-/* Optional: for Firefox */
 #showCity {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  width: 5px;   
+  height: 0px;  
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #202020;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; 
 }

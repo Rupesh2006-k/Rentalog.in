@@ -1,13 +1,38 @@
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React, { useEffect } from "react";
+import Lenis from 'lenis'
+import { createBrowserRouter, RouterProvider, useLocation } from "react-router";
 import Navbar from "../pages/Navbar";
 import HomePage from "../pages/HomePage";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
 import Login from "../pages/Login";
+import SignUp from '../pages/SignUp'
 import Rentals from '../pages/Rentals'
-// ✅ Layout Component (so Navbar appears on every page)
+import DashBoard from '../pages/DashBoard'
 const Layout = ({ children }) => {
+ const location = useLocation();
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 0.5,         
+      easing: (t) => t,      
+      smooth: true,
+      direction: "vertical",
+      gestureDirection: "vertical",
+    });
+
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    lenis.scrollTo(0, { immediate: false });
+
+    return () => lenis.destroy(); 
+  }, [location]);
+
+
   return (
     <div className="min-h-screen w-full">
       <Navbar />
@@ -16,7 +41,6 @@ const Layout = ({ children }) => {
   );
 };
 
-// ✅ Data Router Configuration
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +79,22 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Login />
+      </Layout>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <Layout>
+        <SignUp/>
+      </Layout>
+    ),
+  },
+  {
+    path: "/dashBoard",
+    element: (
+      <Layout>
+        <DashBoard/>
       </Layout>
     ),
   },

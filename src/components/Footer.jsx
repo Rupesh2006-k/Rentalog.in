@@ -1,9 +1,9 @@
 import React from "react";
 import { IoLogoInstagram } from "react-icons/io5";
 import { RiCopyrightLine, RiTwitterLine } from "react-icons/ri";
-import { BsLinkedin, BsDiscord } from "react-icons/bs";
+import { BsLinkedin} from "react-icons/bs";
 import logo from "../assets/logos/logo.png";
-
+import { RiTwitterXFill } from "react-icons/ri";
 const Footer = () => {
   const animatedLink = "relative inline-block after:block after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all after:duration-300 after:mt-1 hover:after:w-full";
 
@@ -16,8 +16,7 @@ const Footer = () => {
           <div className="flex flex-wrap gap-4 text-2xl">
             <IoLogoInstagram className="hover:text-pink-600 transition-colors cursor-pointer" />
             <BsLinkedin className="hover:text-blue-700 transition-colors cursor-pointer" />
-            <BsDiscord className="hover:text-indigo-700 transition-colors cursor-pointer" />
-            <RiTwitterLine className="hover:text-sky-500 transition-colors cursor-pointer" />
+            <RiTwitterXFill  className=" transition-colors cursor-pointer" />
           </div>
         </div>
 
@@ -55,9 +54,10 @@ const Footer = () => {
       </div>
 
       <div className="py-6 text-center text-sm border-t border-zinc-100 flex flex-col md:flex-row justify-center items-center gap-2">
-        <h1 className="flex justify-center items-center gap-1">
-          Copyright <RiCopyrightLine /> 2025 The Virtual World Maker
+        <h1 className="flex justify-center   items-center gap-1">
+          Copyright <RiCopyrightLine />| 2025 | The Virtual World Maker | 
         </h1>
+        
         <h1>All Rights Reserved.</h1>
       </div>
     </footer>

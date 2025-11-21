@@ -1,6 +1,10 @@
 import { MapPin, BadgeCheck } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { showPage } from "../features/ViewDetailSlice";
 
-export function RoomCard({ room, onViewDetails }) {
+const RoomCard = ({ room }) => {
+
+let dispatch =   useDispatch()
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer">
       {/* Image */}
@@ -40,7 +44,7 @@ export function RoomCard({ room, onViewDetails }) {
             {room.roomType}
           </span>
           <button
-            onClick={() => onViewDetails(room.id)}
+            onClick={() => dispatch(showPage())}
             className="text-teal-600 hover:text-teal-700 transition-colors"
           >
             View Details →
@@ -49,4 +53,6 @@ export function RoomCard({ room, onViewDetails }) {
       </div>
     </div>
   );
-}
+};
+
+export default RoomCard;

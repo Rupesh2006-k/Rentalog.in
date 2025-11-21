@@ -1,7 +1,6 @@
-import { RoomCard } from './RoomCard';
+import RoomCard from './RoomCard'; // ✅ fixed import
 
-export function RoomListing({ onViewDetails }) {
-  // Mock data for room listings
+const RoomListing = ({ onViewDetails }) => {
   const rooms = [
     {
       id: '1',
@@ -89,4 +88,6 @@ export function RoomListing({ onViewDetails }) {
       </div>
     </section>
   );
-}
+};
+
+export default RoomListing;

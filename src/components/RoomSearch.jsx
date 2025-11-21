@@ -1,25 +1,37 @@
-import { MapPin, Search, SlidersHorizontal } from 'lucide-react';
-import { useState } from 'react';
+/** @format */
 
-export function SearchSection({ onSearch }) {
+import { MapPin, Search, SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+
+const RoomSearch = ({ onSearch }) => {
   const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({
-    city: '',
-    minPrice: '',
-    maxPrice: '',
-    roomType: 'all',
-    availability: 'all',
+
+  const { register, handleSubmit, control } = useForm({
+    defaultValues: {
+      city: "",
+      minPrice: "",
+      maxPrice: "",
+      roomType: "all",
+      availability: "all",
+    },
   });
 
-  const handleSearch = () => {
-    onSearch(filters);
+  const onSubmit = (data) => {
+    console.log("Form Data:", data);
+    // Safe check if onSearch exists
+    if (typeof onSearch === "function") {
+      onSearch(data);
+    }
   };
 
   return (
-    <section className="bg-white py-8 border-b">
+    <section className="bg-white py-8 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Search Bar */}
-        <div className="bg-white rounded-2xl shadow-lg p-4 border-2 border-teal-100">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-white rounded-2xl shadow-lg p-4 border-2 border-teal-100"
+        >
           <div className="flex flex-col md:flex-row gap-4">
             {/* City Input */}
             <div className="flex-1 relative">
@@ -27,14 +39,14 @@ export function SearchSection({ onSearch }) {
               <input
                 type="text"
                 placeholder="Enter city name..."
-                value={filters.city}
-                onChange={(e) => setFilters({ ...filters, city: e.target.value })}
+                {...register("city")}
                 className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 transition-colors"
               />
             </div>
 
             {/* Filter Toggle Button */}
             <button
+              type="button"
               onClick={() => setShowFilters(!showFilters)}
               className="px-6 py-3 border-2 border-gray-200 rounded-xl hover:border-teal-500 transition-colors flex items-center justify-center gap-2"
             >
@@ -44,7 +56,7 @@ export function SearchSection({ onSearch }) {
 
             {/* Search Button */}
             <button
-              onClick={handleSearch}
+              type="submit"
               className="bg-teal-600 text-white px-8 py-3 rounded-xl hover:bg-teal-700 transition-colors flex items-center justify-center gap-2"
             >
               <Search className="w-5 h-5" />
@@ -55,59 +67,79 @@ export function SearchSection({ onSearch }) {
           {/* Expanded Filters */}
           {showFilters && (
             <div className="grid md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-gray-200">
+              {/* Min Price */}
               <div>
-                <label className="block text-sm text-gray-600 mb-2">Min Price (₹)</label>
+                <label className="block text-sm text-gray-600 mb-2">
+                  Min Price (₹)
+                </label>
                 <input
                   type="number"
                   placeholder="5,000"
-                  value={filters.minPrice}
-                  onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
+                  {...register("minPrice")}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500"
                 />
               </div>
 
+              {/* Max Price */}
               <div>
-                <label className="block text-sm text-gray-600 mb-2">Max Price (₹)</label>
+                <label className="block text-sm text-gray-600 mb-2">
+                  Max Price (₹)
+                </label>
                 <input
                   type="number"
                   placeholder="20,000"
-                  value={filters.maxPrice}
-                  onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
+                  {...register("maxPrice")}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500"
                 />
               </div>
 
+              {/* Room Type */}
               <div>
-                <label className="block text-sm text-gray-600 mb-2">Room Type</label>
-                <select
-                  value={filters.roomType}
-                  onChange={(e) => setFilters({ ...filters, roomType: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500"
-                >
-                  <option value="all">All Types</option>
-                  <option value="private">Private Room</option>
-                  <option value="shared">Shared Room</option>
-                  <option value="studio">Studio</option>
-                </select>
+                <label className="block text-sm text-gray-600 mb-2">
+                  Room Type
+                </label>
+                <Controller
+                  name="roomType"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      {...field}
+                      className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500 bg-white"
+                    >
+                      <option value="all">All Types</option>
+                      <option value="private">Private Room</option>
+                      <option value="shared">Shared Room</option>
+                      <option value="studio">Studio</option>
+                    </select>
+                  )}
+                />
               </div>
 
+              {/* Availability */}
               <div>
-                <label className="block text-sm text-gray-600 mb-2">Availability</label>
-                <select
-                  value={filters.availability}
-                  onChange={(e) => setFilters({ ...filters, availability: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500"
-                >
-                  <option value="all">Any Time</option>
-                  <option value="immediate">Immediate</option>
-                  <option value="1month">Within 1 Month</option>
-                  <option value="3months">Within 3 Months</option>
-                </select>
+                <label className="block text-sm   mb-2">Availability</label>
+                <Controller
+                  name="availability"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      {...field}
+                      className="w-full  px-4  py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-teal-500 "
+                    >
+                      <option value="all">Any Time</option>
+                      <option value="immediate">Immediate</option>
+                      <option value="1month">Within 1 Month</option>
+                      <option value="3months">Within 3 Months</option>
+                    </select>
+                  )}
+                />
               </div>
             </div>
           )}
-        </div>
+        </form>
       </div>
     </section>
   );
-}
+};
+
+export default RoomSearch;
