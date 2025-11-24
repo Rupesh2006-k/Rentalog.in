@@ -1,21 +1,33 @@
+/** @format */
+
 import React, { useEffect } from "react";
-import Lenis from 'lenis'
+import Lenis from "lenis";
 import { createBrowserRouter, RouterProvider, useLocation } from "react-router";
 import Navbar from "../pages/Navbar";
 import HomePage from "../pages/HomePage";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
 import Login from "../pages/Login";
-import SignUp from '../pages/SignUp'
-import Rentals from '../pages/Rentals'
-import DashBoard from '../pages/DashBoard'
+import SignUp from "../pages/SignUp";
+import Rentals from "../pages/Rentals";
+
+import AddNewRenter from "../components/AddNewRenter";
+import EditProfile from "../components/EditProfile";
+
+import AddresDetail from "../components/addNewRenter/AddresDetail";
+import PaymentDetails from "../components/addNewRenter/PaymentDetails";
+import PersionalDetails from "../components/addNewRenter/PersionalDetails";
+
+import Profile from "../pages/Profile";
+
+import DashBoard from "../pages/DashBoard";
 const Layout = ({ children }) => {
- const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 0.5,         
-      easing: (t) => t,      
+      duration: 0.5,
+      easing: (t) => t,
       smooth: true,
       direction: "vertical",
       gestureDirection: "vertical",
@@ -29,9 +41,8 @@ const Layout = ({ children }) => {
 
     lenis.scrollTo(0, { immediate: false });
 
-    return () => lenis.destroy(); 
+    return () => lenis.destroy();
   }, [location]);
-
 
   return (
     <div className="min-h-screen w-full">
@@ -86,7 +97,7 @@ const router = createBrowserRouter([
     path: "/signup",
     element: (
       <Layout>
-        <SignUp/>
+        <SignUp />
       </Layout>
     ),
   },
@@ -94,7 +105,57 @@ const router = createBrowserRouter([
     path: "/dashBoard",
     element: (
       <Layout>
-        <DashBoard/>
+        <DashBoard />
+      </Layout>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <Layout>
+        <Profile />
+      </Layout>
+    ),
+  },
+  {
+    path: "/dashBoard/addresDetail",
+    element: (
+      <Layout>
+        <AddresDetail />
+      </Layout>
+    ),
+  },
+
+  {
+    path: "/addnewrenter",
+    element: (
+      <Layout>
+        <AddNewRenter />
+      </Layout>
+    ),
+  },
+  {
+    path: "/editprofile",
+    element: (
+      <Layout>
+        <EditProfile />
+      </Layout>
+    ),
+  },
+
+  {
+    path: "/dashBoard/paymentdetails",
+    element: (
+      <Layout>
+        <PaymentDetails />
+      </Layout>
+    ),
+  },
+  {
+    path: "/dashBoard/persionaldetails",
+    element: (
+      <Layout>
+        <PersionalDetails />
       </Layout>
     ),
   },
